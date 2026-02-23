@@ -22,7 +22,7 @@
   --led-green-dim: #003311;
   --led-green-glow: rgba(0,221,68,0.45);
   --led-off: #1a1a1e;
-  --text-dim: #444450;
+  --text-dim: #8a8fa8;
   --text-bright: #ffeecc;
   --accent: #ff2200;
   --dot-on: #00dd44;
@@ -955,7 +955,6 @@ function doThrow(target, m) {
 
   renderBoard(); renderTargets(); renderTurn();
   checkWin();
-  if (G.currentThrows.length >= 3) setTimeout(() => nextPlayer(), 380);
 }
 
 function tapCell(player, target) {
