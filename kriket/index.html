@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>KRIKET BEZ BULZAJZ</title>
 <style>
-/* ── 7-segment LED font ── */
 @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
 
 :root {
@@ -39,7 +38,6 @@ body {
   background: var(--cab);
   color: var(--text-bright);
   min-height: 100vh;
-  /* subtle scanlines */
   background-image: repeating-linear-gradient(
     0deg,
     transparent,
@@ -49,9 +47,7 @@ body {
   );
 }
 
-/* ════════════════════════════════
-   SETUP SCREEN
-════════════════════════════════ */
+/* ════ SETUP ════ */
 #setup-screen {
   display: flex;
   flex-direction: column;
@@ -61,10 +57,7 @@ body {
   margin: 0 auto;
 }
 
-.setup-hero {
-  text-align: center;
-  padding: 2rem 0 1.5rem;
-}
+.setup-hero { text-align: center; padding: 2rem 0 1.5rem; }
 .setup-hero h1 {
   font-family: var(--seg);
   font-size: 3.2rem;
@@ -92,7 +85,6 @@ body {
 }
 .s-section { margin-bottom: 1.4rem; }
 
-/* Player chips */
 .chip-row { display: flex; gap: 0.4rem; flex-wrap: wrap; }
 .chip {
   background: var(--panel);
@@ -114,7 +106,6 @@ body {
   text-shadow: 0 0 8px var(--led-red-glow);
 }
 
-/* Name inputs */
 .led-input {
   background: var(--panel);
   border: 1px solid var(--border);
@@ -135,7 +126,6 @@ body {
 .led-input::placeholder { color: var(--text-dim); text-shadow: none; }
 #player-names { display: flex; flex-direction: column; gap: 0.45rem; }
 
-/* Number selector grid */
 .num-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
@@ -168,12 +158,7 @@ body {
   color: var(--led-green);
   text-shadow: 0 0 7px var(--led-green-glow);
 }
-.num-count {
-  font-size: 0.68rem;
-  color: var(--text-dim);
-  letter-spacing: 0.1em;
-  margin-bottom: 0.4rem;
-}
+.num-count { font-size: 0.68rem; color: var(--text-dim); letter-spacing: 0.1em; margin-bottom: 0.4rem; }
 .num-count span { color: var(--led-amber); }
 .btn-random {
   background: var(--panel);
@@ -191,7 +176,6 @@ body {
 }
 .btn-random:active { border-color: var(--led-amber); color: var(--led-amber); }
 
-/* Rounds / Options */
 .row2 { display: flex; gap: 0.75rem; align-items: center; }
 .led-input-sm {
   background: var(--panel);
@@ -228,7 +212,6 @@ body {
 .pill input { display: none; }
 .pill.on { border-color: var(--led-red); color: var(--led-red); background: var(--led-red-dim); }
 
-/* Start button */
 .btn-start {
   background: var(--led-red-dim);
   border: 2px solid var(--led-red);
@@ -262,9 +245,7 @@ body {
 }
 .btn-resume:active { border-color: var(--text-bright); color: var(--text-bright); }
 
-/* ════════════════════════════════
-   GAME SCREEN
-════════════════════════════════ */
+/* ════ GAME ════ */
 #game-screen { display: none; flex-direction: column; height: 100vh; overflow: hidden; }
 
 .top-bar {
@@ -289,13 +270,7 @@ body {
   letter-spacing: 0.2em;
   text-shadow: 0 0 12px var(--led-red-glow);
 }
-.r-badge {
-  font-family: var(--seg);
-  font-size: 0.72rem;
-  color: var(--text-dim);
-  letter-spacing: 0.12em;
-  margin-left: 0.5rem;
-}
+.r-badge { font-family: var(--seg); font-size: 0.72rem; color: var(--text-dim); letter-spacing: 0.12em; margin-left: 0.5rem; }
 .top-btns { display: flex; gap: 0.35rem; }
 .top-btn {
   background: var(--panel);
@@ -311,16 +286,9 @@ body {
 }
 .top-btn.danger { color: var(--led-red); border-color: var(--led-red-dim); }
 
-/* Scoreboard */
-.game-scroll {
-  flex: 1;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-  min-height: 0;
-}
+.game-scroll { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; min-height: 0; }
 
 .score-table { width: 100%; border-collapse: collapse; }
-
 .score-table thead th {
   background: var(--panel);
   font-family: var(--seg);
@@ -374,6 +342,7 @@ body {
 .tc.bull { color: var(--led-green); text-shadow: 0 0 8px var(--led-green-glow); }
 .tc.done { color: var(--text-dim); text-shadow: none; }
 
+/* mc — score cells. No longer disabled at 3 hits so player can still tap to score overflow */
 .mc {
   padding: 0.3rem 0.2rem;
   text-align: center;
@@ -383,9 +352,10 @@ body {
 }
 .mc:active { background: rgba(255,34,0,0.06); }
 .mc.ac { background: rgba(255,34,0,0.04); }
-.mc.cl { opacity: 0.25; pointer-events: none; }
+/* .mc.cl removed — we no longer block tap on closed cells for the active player;
+   non-active player cells are blocked via JS check in tapCell */
+.mc.other { cursor: default; }
 
-/* Dots — green LED dots */
 .dots { display: flex; align-items: center; justify-content: center; gap: 6px; height: 42px; }
 .dot {
   width: 14px; height: 14px;
@@ -401,9 +371,20 @@ body {
   background: transparent;
   border: 1.5px solid #1e2a1a;
 }
+/* Overflow indicator: dots closed + a small + badge */
+.dot-plus {
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: var(--led-amber);
+  box-shadow: 0 0 6px rgba(255,170,0,0.5);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.6rem;
+  color: #000;
+  font-weight: bold;
+  flex-shrink: 0;
+}
 .dot-empty { color: var(--border); font-size: 1.2rem; line-height: 42px; }
 
-/* Last round */
 .last-bar {
   display: none;
   background: rgba(255,34,0,0.1);
@@ -418,7 +399,7 @@ body {
 }
 .last-bar.show { display: block; }
 
-/* ── Input Panel ── */
+/* Input Panel */
 .input-panel {
   background: var(--panel);
   border-top: 2px solid var(--border);
@@ -464,9 +445,15 @@ body {
   background: var(--led-green-dim);
   text-shadow: 0 0 6px var(--led-green-glow);
 }
+.tslot.pts {
+  border-color: var(--led-amber);
+  color: var(--led-amber);
+  background: var(--led-amber-dim);
+  text-shadow: 0 0 6px rgba(255,170,0,0.4);
+}
 .tslot.miss { color: var(--text-dim); }
+.tslot.dead { color: var(--text-dim); border-color: var(--border); opacity: 0.5; }
 
-/* Mult row */
 .mult-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.35rem; }
 .mbtn {
   background: var(--cab);
@@ -489,7 +476,6 @@ body {
   text-shadow: 0 0 6px rgba(255,170,0,0.4);
 }
 
-/* Target grid — all same including MISS */
 .tgt-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -520,14 +506,22 @@ body {
   text-shadow: 0 0 8px var(--led-green-glow);
 }
 .tbtn.bull:active { background: var(--led-green-dim); box-shadow: 0 0 14px rgba(0,221,68,0.2); }
+/* "closed" = all players closed — still tappable to record the throw, but no points */
 .tbtn.closed {
   color: var(--text-dim);
   border-color: var(--border);
   text-shadow: none;
-  opacity: 0.3;
-  pointer-events: none;
+  opacity: 0.45;
 }
-/* MISS — same size, amber color */
+.tbtn.closed:active { background: rgba(255,255,255,0.04); transform: scale(0.94); }
+/* scoring = current player already has 3, but number still open for others = can still score */
+.tbtn.scoring {
+  border-color: var(--led-amber);
+  color: var(--led-amber);
+  text-shadow: 0 0 6px rgba(255,170,0,0.35);
+}
+.tbtn.scoring:active { background: var(--led-amber-dim); }
+
 .tbtn.miss-btn {
   color: var(--led-amber);
   border-color: var(--led-amber-dim);
@@ -537,7 +531,6 @@ body {
 }
 .tbtn.miss-btn:active { background: var(--led-amber-dim); }
 
-/* Action row */
 .act-row { display: grid; grid-template-columns: 1fr 2fr; gap: 0.4rem; }
 .btn-undo {
   background: var(--cab);
@@ -567,9 +560,7 @@ body {
 }
 .btn-next:active { box-shadow: 0 0 16px rgba(255,34,0,0.3); transform: scale(0.97); }
 
-/* ════════════════════════════════
-   WIN OVERLAY
-════════════════════════════════ */
+/* ════ WIN OVERLAY ════ */
 #win-overlay {
   display: none;
   position: fixed; inset: 0;
@@ -580,10 +571,7 @@ body {
   backdrop-filter: blur(6px);
 }
 #win-overlay.show { display: flex; }
-.win-icon {
-  font-size: 2.5rem;
-  filter: drop-shadow(0 0 12px var(--led-red-glow));
-}
+.win-icon { font-size: 2.5rem; filter: drop-shadow(0 0 12px var(--led-red-glow)); }
 .win-lbl { font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--text-dim); font-family: var(--seg); }
 .win-name {
   font-family: var(--seg);
@@ -596,7 +584,6 @@ body {
 .win-sub { color: var(--text-dim); font-family: var(--seg); font-size: 0.72rem; text-align: center; letter-spacing: 0.08em; }
 .win-btns { display: flex; flex-direction: column; gap: 0.5rem; width: 100%; max-width: 280px; margin-top: 0.5rem; }
 
-/* Toast */
 #toast {
   position: fixed; bottom: 35%; left: 50%;
   transform: translateX(-50%) translateY(8px);
@@ -623,7 +610,6 @@ body {
     <div class="sub">posli mi 5 euro</div>
   </div>
 
-  <!-- Players -->
   <div class="s-section">
     <span class="s-label">[ PLAYERS ]</span>
     <div class="chip-row" id="player-chips">
@@ -637,13 +623,11 @@ body {
     </div>
   </div>
 
-  <!-- Names -->
   <div class="s-section">
     <span class="s-label">[ NAMES ]</span>
     <div id="player-names"></div>
   </div>
 
-  <!-- Number picker -->
   <div class="s-section">
     <span class="s-label">[ SELECT 7 NUMBERS ]</span>
     <div class="num-count">Selected: <span id="sel-count">0</span> / 7</div>
@@ -651,7 +635,6 @@ body {
     <button class="btn-random" id="random-btn">[ RANDOM 7 ]</button>
   </div>
 
-  <!-- Round limit -->
   <div class="s-section">
     <span class="s-label">[ ROUND LIMIT ]</span>
     <div class="row2">
@@ -660,7 +643,6 @@ body {
     </div>
   </div>
 
-  <!-- Options -->
   <div class="s-section">
     <span class="s-label">[ OPTIONS ]</span>
     <div class="pill-row">
@@ -692,7 +674,6 @@ body {
   </div>
 
   <div class="input-panel">
-    <!-- Turn + throw slots -->
     <div class="turn-row">
       <div>
         <div class="turn-lbl">NOW THROWING</div>
@@ -705,17 +686,14 @@ body {
       </div>
     </div>
 
-    <!-- Multiplier -->
     <div class="mult-row">
       <button class="mbtn active" data-m="1">SINGLE</button>
       <button class="mbtn" data-m="2">DOUBLE</button>
       <button class="mbtn" data-m="3">TRIPLE</button>
     </div>
 
-    <!-- Target grid (numbers + MISS, all same style) -->
     <div class="tgt-grid" id="tgt-grid"></div>
 
-    <!-- Actions -->
     <div class="act-row">
       <button class="btn-undo" id="undo-btn">UNDO</button>
       <button class="btn-next" id="next-btn">NEXT &gt;&gt;</button>
@@ -829,7 +807,6 @@ document.getElementById('start-btn').addEventListener('click', () => {
   G.players = [...document.querySelectorAll('#player-names input')].map((x,i) => x.value.trim().toUpperCase() || `P${i+1}`);
   G.cutthroat = document.getElementById('opt-ct').checked;
   G.maxRounds = +document.getElementById('max-rounds').value;
-  // Sort targets: numbers ascending, B last
   const nums = [...selNums].filter(n => n !== 'B').sort((a,b) => a-b);
   const hasBull = selNums.has('B');
   G.targets = hasBull ? [...nums, 'B'] : nums;
@@ -868,8 +845,11 @@ function renderBoard() {
     const allClosed = G.players.every(p => G.hits[p][t] >= 3);
     h += `<tr><td class="tc${bull?' bull':''}${allClosed?' done':''}">${bull?'B':t}</td>`;
     G.players.forEach(p => {
-      const n = G.hits[p][t], ac = p===cp, cl = n>=3;
-      h += `<td class="mc${ac?' ac':''}${cl?' cl':''}" onclick="tapCell('${p}','${t}')">${dots(n)}</td>`;
+      const n = G.hits[p][t];
+      const isActive = p === cp;
+      // Cell is tappable only for current player
+      const cls = `mc${isActive?' ac':' other'}`;
+      h += `<td class="${cls}"${isActive ? ` onclick="tapCell('${p}','${t}')"` : ''}>${dotsHtml(n)}</td>`;
     });
     h += '</tr>';
   });
@@ -880,32 +860,58 @@ function renderBoard() {
   document.getElementById('score-table').innerHTML = h;
 }
 
-function dots(n) {
+// BUG FIX: show 3 filled dots when closed, plus an amber dot if scoring overflow hits
+function dotsHtml(n) {
   if (n === 0) return '<div class="dots"><span class="dot-empty">·</span></div>';
-  const on = Math.min(n, 3), off = 3 - on;
+  const filled = Math.min(n, 3);
+  const empty = 3 - filled;
   let s = '';
-  for (let i = 0; i < on; i++) s += '<span class="dot on"></span>';
-  for (let i = 0; i < off; i++) s += '<span class="dot off"></span>';
+  for (let i = 0; i < filled; i++) s += '<span class="dot on"></span>';
+  for (let i = 0; i < empty; i++) s += '<span class="dot off"></span>';
+  // Show a small amber plus indicator when player has extra scoring hits recorded
+  if (n > 3) s += `<span class="dot-plus">+${n-3}</span>`;
   return `<div class="dots">${s}</div>`;
 }
 
 function renderTargets() {
   const g = document.getElementById('tgt-grid');
   g.innerHTML = '';
+  const cp = G.players[G.currentPlayer];
+
   G.targets.forEach(t => {
-    const closed = G.players.every(p => G.hits[p][t] >= 3);
-    const bull = t === 'B';
+    // allClosed: every player has >= 3 hits — number is completely dead
+    const allClosed = G.players.every(p => G.hits[p][t] >= 3);
+    // cpClosed: current player has >= 3 hits — they are in scoring mode for this number
+    const cpClosed = G.hits[cp][t] >= 3;
+    const bull = (t === 'B');
     const b = document.createElement('button');
-    b.className = `tbtn${bull?' bull':''}${closed?' closed':''}`;
-    b.textContent = bull ? 'BULL' : t;
-    if (!closed) b.onclick = () => doThrow(t, mult);
+    b.dataset.target = t;
+
+    if (allClosed) {
+      // All players closed — record throw visually but no points
+      b.className = 'tbtn closed';
+      b.textContent = bull ? 'BULL' : t;
+      b.addEventListener('click', function() { doThrow(this.dataset.target === 'B' ? 'B' : +this.dataset.target, mult, true); });
+    } else if (cpClosed) {
+      // Current player closed it — amber "scoring" style, still clickable
+      b.className = 'tbtn scoring';
+      b.textContent = bull ? 'BULL' : t;
+      b.addEventListener('click', function() { doThrow(this.dataset.target === 'B' ? 'B' : +this.dataset.target, mult); });
+    } else {
+      // Normal open target
+      b.className = bull ? 'tbtn bull' : 'tbtn';
+      b.textContent = bull ? 'BULL' : t;
+      b.addEventListener('click', function() { doThrow(this.dataset.target === 'B' ? 'B' : +this.dataset.target, mult); });
+    }
+
     g.appendChild(b);
   });
-  // MISS — same grid button, same style as others but amber
+
+  // MISS button
   const m = document.createElement('button');
   m.className = 'tbtn miss-btn';
   m.textContent = 'MISS';
-  m.onclick = () => doThrow(null, 0);
+  m.addEventListener('click', () => doThrow(null, 0));
   g.appendChild(m);
 }
 
@@ -915,12 +921,17 @@ function renderTurn() {
     const sl = document.getElementById(`ts${i}`);
     const th = G.currentThrows[i];
     if (th !== undefined) {
-      if (th === null) { sl.textContent = 'MISS'; sl.className = 'tslot miss'; }
-      else {
-        const lbl = th.mult > 1 ? `${th.mult}X${th.target}` : String(th.target);
-        sl.textContent = lbl; sl.className = 'tslot hit';
+      if (th === null) {
+        sl.textContent = 'MISS'; sl.className = 'tslot miss';
+      } else {
+        // Show +pts in amber if scoring, otherwise green for hits
+        const lbl = th.mult > 1 ? `${th.mult}×${th.target}` : String(th.target);
+        sl.textContent = lbl;
+        sl.className = th.dead ? 'tslot dead' : th.scored ? 'tslot pts' : 'tslot hit';
       }
-    } else { sl.textContent = ''; sl.className = 'tslot'; }
+    } else {
+      sl.textContent = ''; sl.className = 'tslot';
+    }
   }
 }
 
@@ -931,35 +942,66 @@ function renderBadge() {
 }
 
 // ── Throw ──────────────────────────────────────────
-function doThrow(target, m) {
+// BUG FIX: Store full state snapshot in history including currentPlayer and round
+// so UNDO works correctly even across turn/round boundaries
+function doThrow(target, m, dead) {
   if (G.currentThrows.length >= 3) { toast('END TURN FIRST'); return; }
-  G.history.push(JSON.parse(JSON.stringify({ hits:G.hits, points:G.points, currentThrows:G.currentThrows })));
+
+  // Deep-clone full game state for undo
+  G.history.push({
+    hits: JSON.parse(JSON.stringify(G.hits)),
+    points: JSON.parse(JSON.stringify(G.points)),
+    currentThrows: JSON.parse(JSON.stringify(G.currentThrows)),
+    currentPlayer: G.currentPlayer,
+    round: G.round
+  });
+
+  let scored = false;
 
   if (target !== null && m > 0) {
     const cp = G.players[G.currentPlayer];
-    const prev = G.hits[cp][target];
-    G.hits[cp][target] = Math.min(prev + m, 3);
-    const bonus = (prev + m) - 3;
-    if (bonus > 0) {
-      const val = target === 'B' ? 25 : +target;
-      if (G.cutthroat) {
-        G.players.forEach(p => { if (p !== cp && G.hits[p][target] < 3) G.points[p] += bonus * val; });
-      } else {
-        if (G.players.filter(p => p !== cp).some(p => G.hits[p][target] < 3)) G.points[cp] += bonus * val;
+
+    if (dead) {
+      // Number is fully closed by everyone — record throw for tracking but no hits, no points
+      G.currentThrows.push({ target, mult: m, scored: false, dead: true });
+    } else {
+      const prev = G.hits[cp][target];
+
+      // Store raw hit count uncapped so scoring math always works
+      G.hits[cp][target] = prev + m;
+
+      // Hits toward closing vs hits that overflow into scoring
+      const closingHits = Math.max(0, Math.min(m, 3 - prev));
+      const bonusHits = m - closingHits;
+
+      if (bonusHits > 0) {
+        const val = target === 'B' ? 25 : +target;
+        if (G.cutthroat) {
+          G.players.forEach(p => {
+            if (p !== cp && G.hits[p][target] < 3) G.points[p] += bonusHits * val;
+          });
+        } else {
+          if (G.players.some(p => p !== cp && G.hits[p][target] < 3)) {
+            G.points[cp] += bonusHits * val;
+            scored = true;
+          }
+        }
       }
+
+      G.currentThrows.push({ target, mult: m, scored });
     }
-    G.currentThrows.push({ target, mult: m });
   } else {
     G.currentThrows.push(null);
   }
 
-  renderBoard(); renderTargets(); renderTurn();
+  renderAll();
   checkWin();
 }
 
 function tapCell(player, target) {
-  if (player !== G.players[G.currentPlayer]) { toast('NOT YOUR TURN'); return; }
-  doThrow(target, mult);
+  if (player !== G.players[G.currentPlayer]) { toast("NOT YOUR TURN"); return; }
+  const t = (target === "B") ? "B" : +target;
+  doThrow(t, mult);
 }
 
 // ── Turn management ──────────────────────────────
@@ -976,22 +1018,40 @@ function nextPlayer() {
 function endByLimit() {
   let winner = G.players[0], best = -Infinity;
   G.players.forEach(p => {
+    // Count how many targets this player has closed
     const closed = G.targets.filter(t => G.hits[p][t] >= 3).length;
+    // In cut-throat lower points = better; in standard higher points = better
     const pts = G.cutthroat ? -G.points[p] : G.points[p];
-    const s = closed * 10000 + pts;
-    if (s > best) { best = s; winner = p; }
+    const score = closed * 10000 + pts;
+    if (score > best) { best = score; winner = p; }
   });
-  showWin(winner, `${G.targets.filter(t => G.hits[winner][t] >= 3).length}/${G.targets.length} CLOSED  ${G.points[winner]} PTS  LIMIT`);
+  const wClosed = G.targets.filter(t => G.hits[winner][t] >= 3).length;
+  showWin(winner, `${wClosed}/${G.targets.length} CLOSED  ${G.points[winner]} PTS  LIMIT`);
 }
 
+// BUG FIX: Win condition — player must have closed all targets AND have
+// equal or better points than every opponent (standard: >= their pts; cut-throat: <= their pts)
 function checkWin() {
   const cp = G.players[G.currentPlayer];
   if (!G.targets.every(t => G.hits[cp][t] >= 3)) return;
+
   const myPts = G.points[cp];
-  const wins = G.cutthroat
-    ? G.players.filter(p => p !== cp).every(p => G.points[p] >= myPts)
-    : G.players.filter(p => p !== cp).every(p => G.points[p] <= myPts);
-  if (wins) showWin(cp, `ALL CLOSED  ${myPts} PTS`);
+  let wins;
+  if (G.cutthroat) {
+    // Cut-throat: you win if all opponents have >= your points (you have least or equal)
+    wins = G.players.filter(p => p !== cp).every(p => G.points[p] >= myPts);
+  } else {
+    // Standard: you win if all opponents have <= your points (you have most or equal)
+    wins = G.players.filter(p => p !== cp).every(p => G.points[p] <= myPts);
+  }
+
+  if (wins) {
+    showWin(cp, `ALL CLOSED  ${myPts} PTS`);
+  } else if (!G.cutthroat) {
+    // Standard: player closed everything but someone has more points.
+    // They must keep scoring to catch up — notify them.
+    toast('CLOSED! KEEP SCORING');
+  }
 }
 
 function showWin(name, sub) {
@@ -1003,22 +1063,32 @@ function showWin(name, sub) {
 
 // ── Controls ──────────────────────────────────────
 document.getElementById('next-btn').addEventListener('click', nextPlayer);
+
+// BUG FIX: Undo now restores full state including currentPlayer and round
 document.getElementById('undo-btn').addEventListener('click', () => {
   if (!G.history.length) { toast('NOTHING TO UNDO'); return; }
   const s = G.history.pop();
-  G.hits = s.hits; G.points = s.points; G.currentThrows = s.currentThrows;
-  renderAll(); toast('UNDONE');
+  G.hits = s.hits;
+  G.points = s.points;
+  G.currentThrows = s.currentThrows;
+  G.currentPlayer = s.currentPlayer;
+  G.round = s.round;
+  renderAll();
+  toast('UNDONE');
 });
+
 document.querySelectorAll('.mbtn').forEach(b => {
   b.addEventListener('click', () => {
     mult = +b.dataset.m;
     document.querySelectorAll('.mbtn').forEach(x => x.classList.toggle('active', x === b));
   });
 });
+
 document.getElementById('save-btn').addEventListener('click', () => { save(); toast('SAVED'); });
 document.getElementById('end-btn').addEventListener('click', () => { if (confirm('End game?')) newGame(); });
 
 function save() { try { localStorage.setItem('crick4', JSON.stringify(G)); } catch(e) {} }
+
 function newGame() {
   try { localStorage.removeItem('crick4'); } catch(e) {}
   document.getElementById('win-overlay').classList.remove('show');
@@ -1036,4 +1106,3 @@ function toast(msg) {
 </script>
 </body>
 </html>
-
