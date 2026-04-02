@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Prewatchr – Know Before You Click</title>
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="apple-touch-icon" href="icon128.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
@@ -50,8 +52,12 @@
     color: var(--ink);
     text-decoration: none;
     letter-spacing: -0.02em;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
   }
 
+  .logo img { width: 28px; height: 28px; border-radius: 6px; }
   .logo span { color: var(--red); font-style: italic; }
 
   nav a {
@@ -499,17 +505,18 @@
 <body>
 
 <nav>
-  <a class="logo" href="index.html">Pre<span>watchr</span></a>
+  <a class="logo" href="index.html"><img src="icon128.png" alt="">Pre<span>watchr</span></a>
   <div class="nav-links">
     <a href="#how">How it works</a>
     <a href="privacy.html">Privacy</a>
+    <a class="btn btn-primary" href="#download">Install free</a>
   </div>
 </nav>
 
 <!-- HERO -->
 <div class="hero">
   <div class="hero-badge">
-    <svg width="7" height="7" viewBox="0 0 7 7"><circle cx="3.5" cy="3.5" r="3.5" fill="#D85A30"/></svg>
+    <img src="icon128.png" alt="" style="width:16px;height:16px;border-radius:3px;">
     Free Chrome &amp; Firefox extension
   </div>
   <h1>Know what's inside<br>a video <em>before</em> you click</h1>
@@ -652,7 +659,7 @@
 </div>
 
 <footer>
-  <a class="logo" href="index.html" style="font-size:1.1rem;">Pre<span style="color:var(--red);font-style:italic;">watchr</span></a>
+  <a class="logo" href="index.html" style="font-size:1.1rem;"><img src="icon128.png" alt="" style="width:22px;height:22px;border-radius:5px;">Pre<span style="color:var(--red);font-style:italic;">watchr</span></a>
   <div class="footer-links">
     <a href="privacy.html">Privacy Policy</a>
     <a href="/cdn-cgi/l/email-protection#d2b8a7a0b3b8fca1b7b0b392b5bfb3bbbefcb1bdbf">Contact</a>
