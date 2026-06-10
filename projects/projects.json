@@ -1,0 +1,28 @@
+{
+  "projects": [
+    {
+      "slug": "darts",
+      "name": "DARts",
+      "icon": "🎯",
+      "year": "2026",
+      "desc": "Complete darts arcade scorer with 9 game modes — X01, Cricket, Around the Clock, Shanghai, Halve It, Bob's 27, Killer, Legs, Count Up. Installable PWA, Web Audio sound engine, no backend.",
+      "tech": ["HTML", "CSS", "JS", "PWA", "Web Audio"],
+      "live": "projects/darts/",
+      "source": "https://github.com/jucofuco/kriket",
+      "details": "",
+      "featured": true
+    },
+    {
+      "slug": "prewatchr",
+      "name": "Prewatchr",
+      "icon": "👁️",
+      "year": "2025",
+      "desc": "Chrome & Firefox extension that summarises YouTube videos before you open them. Press a shortcut, click any thumbnail, get a streaming AI summary in seconds. No backend needed for logged-in users.",
+      "tech": ["JS", "Browser Extension", "Python", "Flask", "Gemini API", "SSE"],
+      "live": "projects/prewatchr/",
+      "source": "https://github.com/jucofuco/prewatchr",
+      "details": "",
+      "featured": true
+    }
+  ]
+}

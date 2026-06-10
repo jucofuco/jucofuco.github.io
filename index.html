@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>jucofuco</title>
+<style>
+  :root {
+    --bg: #0a0c0d;
+    --bg-card: #111416;
+    --bg-card-hover: #161a1d;
+    --border: #1f262b;
+    --border-bright: #2c363c;
+    --fg: #d4dadd;
+    --fg-dim: #6b777d;
+    --fg-faint: #404a4f;
+    --red: #ff3b3b;
+    --amber: #ffb000;
+    --green: #2bff88;
+    --mono: 'Share Tech Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  }
+  [data-theme="cream"] {
+    --bg: #f4f0e6;
+    --bg-card: #fffdf7;
+    --bg-card-hover: #fbf8ee;
+    --border: #ddd6c4;
+    --border-bright: #c9c0a8;
+    --fg: #2a2722;
+    --fg-dim: #807a6a;
+    --fg-faint: #b3ab97;
+    --red: #d12a2a;
+    --amber: #c77f00;
+    --green: #1a9e58;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--mono);
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.5;
+    padding: 1.25rem;
+    max-width: 760px;
+    margin: 0 auto;
+    -webkit-font-smoothing: antialiased;
+    transition: background .2s, color .2s;
+  }
+
+  /* ---- top bar ---- */
+  .topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: .8rem;
+    color: var(--fg-dim);
+    margin-bottom: 1.5rem;
+  }
+  .prompt::before { content: "jucofuco@web"; color: var(--green); }
+  .prompt::after  { content: " ~ $"; color: var(--fg-dim); }
+  .controls { display: flex; gap: .4rem; }
+  .controls button {
+    font-family: var(--mono);
+    font-size: .7rem;
+    background: var(--bg-card);
+    color: var(--fg-dim);
+    border: 1px solid var(--border);
+    padding: .25rem .55rem;
+    cursor: pointer;
+    transition: all .15s;
+  }
+  .controls button:hover { color: var(--fg); border-color: var(--border-bright); }
+  .controls button.active { color: var(--amber); border-color: var(--amber); }
+
+  /* ---- ascii header ---- */
+  .ascii {
+    color: var(--green);
+    font-size: clamp(.42rem, 2.1vw, .72rem);
+    line-height: 1.1;
+    white-space: pre;
+    overflow-x: auto;
+    margin-bottom: .75rem;
+    text-shadow: 0 0 8px rgba(43,255,136,.25);
+  }
+  [data-theme="cream"] .ascii { text-shadow: none; }
+
+  .tagline {
+    color: var(--fg-dim);
+    font-size: .85rem;
+    margin-bottom: .35rem;
+  }
+  .tagline .cursor {
+    display: inline-block;
+    width: .55ch;
+    background: var(--green);
+    animation: blink 1.1s step-end infinite;
+    color: transparent;
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  /* ---- section headers ---- */
+  .section-head {
+    color: var(--amber);
+    font-size: .8rem;
+    letter-spacing: .05em;
+    margin: 2rem 0 .85rem;
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+  }
+  .section-head::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ---- about ---- */
+  .about { color: var(--fg); font-size: .9rem; }
+  .about p { margin-bottom: .6rem; }
+  .about .dim { color: var(--fg-dim); }
+  .about a { color: var(--green); text-decoration: none; border-bottom: 1px dotted var(--green); }
+  .about a:hover { background: rgba(43,255,136,.1); }
+
+  /* ---- project cards ---- */
+  .card {
+    display: block;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--red);
+    padding: .9rem 1rem;
+    margin-bottom: .9rem;
+    text-decoration: none;
+    color: inherit;
+    transition: background .15s, border-color .15s, transform .1s;
+  }
+  .card:hover { background: var(--bg-card-hover); border-left-color: var(--amber); transform: translateX(2px); }
+
+  .card-top { display: flex; align-items: baseline; gap: .5rem; margin-bottom: .4rem; }
+  .card-icon { font-size: 1.1rem; }
+  .card-name { color: var(--fg); font-size: 1.05rem; font-weight: bold; }
+  .card-year { color: var(--fg-faint); font-size: .75rem; margin-left: auto; }
+
+  .card-desc { color: var(--fg-dim); font-size: .82rem; margin-bottom: .65rem; }
+
+  .card-tech { display: flex; flex-wrap: wrap; gap: .35rem; margin-bottom: .7rem; }
+  .tag {
+    font-size: .68rem;
+    color: var(--green);
+    border: 1px solid var(--border-bright);
+    padding: .1rem .4rem;
+    background: var(--bg);
+  }
+
+  .card-links { display: flex; gap: 1.1rem; font-size: .78rem; }
+  .card-links span { color: var(--fg-dim); transition: color .15s; }
+  .card-links span::before { content: "› "; color: var(--fg-faint); }
+  .card:hover .card-links .live { color: var(--green); }
+  .card:hover .card-links .src  { color: var(--amber); }
+
+  .error { color: var(--red); font-size: .82rem; }
+
+  /* ---- support ---- */
+  .support {
+    text-align: center;
+    margin: 2.5rem 0 1rem;
+  }
+  .support a {
+    display: inline-block;
+    font-family: var(--mono);
+    color: var(--amber);
+    border: 1px solid var(--amber);
+    padding: .55rem 1.4rem;
+    text-decoration: none;
+    font-size: .85rem;
+    transition: all .15s;
+  }
+  .support a:hover { background: var(--amber); color: var(--bg); }
+
+  footer {
+    text-align: center;
+    color: var(--fg-faint);
+    font-size: .72rem;
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+  }
+</style>
+</head>
+<body data-theme="dark">
+
+  <div class="topbar">
+    <span class="prompt"></span>
+    <div class="controls">
+      <button id="dark" class="active" onclick="setTheme('dark')">DARK</button>
+      <button id="cream" onclick="setTheme('cream')">CREAM</button>
+    </div>
+  </div>
+
+  <pre class="ascii" aria-label="jucofuco">   _                  __                 
+  (_)_   _  ___ ___  / _|_   _  ___ ___  
+  | | | | |/ __/ _ \| |_| | | |/ __/ _ \ 
+  | | |_| | (_| (_) |  _| |_| | (_| (_) |
+ _/ |\__,_|\___\___/|_|  \__,_|\___\___/ 
+|__/                                     </pre>
+
+  <p class="tagline">developer · builds fun, practical web apps<span class="cursor">_</span></p>
+
+  <h2 class="section-head">[ ABOUT ]</h2>
+  <div class="about">
+    <p>I build small web apps that actually do something — no frameworks where they're not needed, no backend where it's not needed, no ads, no tracking, no bullshit.</p>
+    <p class="dim">Everything's pure HTML/CSS/JS, works offline where it can, and ships as a single file or small file set. If something I made is useful to you, <a href="https://ko-fi.com/jucofuco">posli mi 5 euro</a>. No pressure.</p>
+  </div>
+
+  <h2 class="section-head">[ PROJECTS ]</h2>
+  <div id="projects"><p class="error">loading projects...</p></div>
+
+  <div class="support">
+    <a href="https://ko-fi.com/jucofuco">☕ POSLI MI 5 EURO</a>
+  </div>
+
+  <footer>
+    built with html, css &amp; spite · hosted on github pages
+  </footer>
+
+<script>
+  function setTheme(t) {
+    document.body.setAttribute('data-theme', t);
+    document.getElementById('dark').classList.toggle('active', t === 'dark');
+    document.getElementById('cream').classList.toggle('active', t === 'cream');
+    try { localStorage.setItem('theme', t); } catch (e) {}
+  }
+  try {
+    const saved = localStorage.getItem('theme');
+    if (saved) setTheme(saved);
+  } catch (e) {}
+
+  function esc(s) {
+    return String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  }
+
+  fetch('projects/projects.json')
+    .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(data => {
+      const wrap = document.getElementById('projects');
+      const list = (data.projects || []);
+      if (!list.length) { wrap.innerHTML = '<p class="error">no projects yet — coming soon.</p>'; return; }
+      wrap.innerHTML = list.map(p => {
+        const tech = (p.tech || []).map(t => '<span class="tag">' + esc(t) + '</span>').join('');
+        let links = '<span class="live">live</span>';
+        if (p.source)  links += '<span class="src">source</span>';
+        if (p.details) links += '<span class="det">details</span>';
+        return '<a class="card" href="' + esc(p.live) + '">' +
+          '<div class="card-top">' +
+            '<span class="card-icon">' + esc(p.icon || '▸') + '</span>' +
+            '<span class="card-name">' + esc(p.name) + '</span>' +
+            (p.year ? '<span class="card-year">' + esc(p.year) + '</span>' : '') +
+          '</div>' +
+          '<div class="card-desc">' + esc(p.desc) + '</div>' +
+          (tech ? '<div class="card-tech">' + tech + '</div>' : '') +
+          '<div class="card-links">' + links + '</div>' +
+        '</a>';
+      }).join('');
+    })
+    .catch(err => {
+      document.getElementById('projects').innerHTML =
+        '<p class="error">could not load projects.json (' + esc(err.message) + ')</p>';
+    });
+</script>
+</body>
+</html>
