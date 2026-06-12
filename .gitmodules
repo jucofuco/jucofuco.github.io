@@ -1,3 +1,6 @@
 [submodule "projects/darts"]
 	path = projects/darts
 	url = git@github.com:jucofuco/DARts.git
+[submodule "projects/prewatchr"]
+	path = projects/prewatchr
+	url = git@github.com:jucofuco/prewatchr.git
