@@ -23,6 +23,18 @@
       "source": "https://github.com/jucofuco/prewatchr",
       "details": "",
       "featured": true
+    },
+    {
+      "slug": "walktape",
+      "name": "WalkTape",
+      "icon": "📏",
+      "year": "2026",
+      "desc": "iOS app that turns your iPhone into an AR measuring tool — touch a point, walk a route, or raise it to a ceiling to get distances, path lengths, and heights, with exportable PDF plan reports.",
+      "tech": ["Swift", "ARKit", "iOS"],
+      "live": "projects/walktape/",
+      "source": "",
+      "details": "",
+      "featured": true
     }
   ]
 }
