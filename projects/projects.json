@@ -34,7 +34,8 @@
       "live": "projects/walktape/",
       "source": "",
       "details": "",
-      "featured": true
+      "featured": true,
+      "comingSoon": true
     }
   ]
 }
