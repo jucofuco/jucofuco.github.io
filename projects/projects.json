@@ -35,7 +35,21 @@
       "source": "",
       "details": "",
       "featured": true,
-      "comingSoon": true
+      "badge": "coming soon"
+    },
+    {
+      "slug": "invoice-extraction-pipeline",
+      "name": "Invoice Extraction Pipeline",
+      "icon": "🧾",
+      "year": "2026",
+      "desc": "End-to-end reference pipeline for structured invoice extraction: LLM-generated synthetic training data, LoRA fine-tuning of a small open model (Qwen3-4B via Unsloth), a deterministic regex fallback extractor, and field-level accuracy evaluation against ground truth.",
+      "tech": ["Python", "LLM", "LoRA/Unsloth", "Regex", "Docker"],
+      "live": "https://github.com/jucofuco/invoice-extraction-pipeline",
+      "source": "https://github.com/jucofuco/invoice-extraction-pipeline",
+      "details": "",
+      "featured": false,
+      "badge": "discontinued",
+      "badgeDim": true
     }
   ]
 }
