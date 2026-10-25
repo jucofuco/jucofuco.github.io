@@ -2,6 +2,7 @@
   "projects": [
     {
       "slug": "walktape",
+      "color": "#f2b705",
       "name": "WalkTape",
       "icon": "📏",
       "year": "2026",
@@ -15,18 +16,20 @@
     },
     {
       "slug": "darts",
+      "color": "#e5383b",
       "name": "DARts",
       "icon": "🎯",
       "year": "2026",
       "desc": "Complete darts arcade scorer with 9 game modes — X01, Cricket, Around the Clock, Shanghai, Halve It, Bob's 27, Killer, Legs, Count Up. Installable PWA, Web Audio sound engine, no backend.",
       "tech": ["HTML", "CSS", "JS", "PWA", "Web Audio"],
       "live": "projects/darts/",
-      "source": "https://github.com/jucofuco/kriket",
+      "source": "https://github.com/jucofuco/DARts",
       "details": "",
       "featured": true
     },
     {
       "slug": "prewatchr",
+      "color": "#7b5cff",
       "name": "Prewatchr",
       "icon": "👁️",
       "year": "2025",
@@ -39,6 +42,7 @@
     },
     {
       "slug": "invoice-extraction-pipeline",
+      "color": "#7f8c8d",
       "name": "Invoice Extraction Pipeline",
       "icon": "🧾",
       "year": "2025",
