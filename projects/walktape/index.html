@@ -45,6 +45,12 @@
     background:radial-gradient(ellipse 60% 50% at 50% 0%, rgba(250,251,252,0) 0%, var(--paper) 78%);
     pointer-events:none;
   }
+  .back{
+    position:absolute; top:20px; left:24px; z-index:1;
+    font-size:14px; font-weight:500; color:var(--ink-soft); text-decoration:none;
+  }
+  .back:hover{ color:var(--blue); text-decoration:underline; }
+  .back:focus-visible{ outline:2px solid var(--blue); outline-offset:3px; border-radius:3px; }
   .hero-inner{ position:relative; z-index:1; max-width:640px; margin:0 auto; text-align:center; }
 
   .eyebrow{
@@ -86,37 +92,20 @@
     .dim-line,.dim-tick,.dim-dot,.dim-dot-end,.dim-label{ animation:none; opacity:1; stroke-dashoffset:0; }
   }
 
-  .cta{
-    display:inline-flex; align-items:center; gap:8px;
-    background:var(--ink); color:#fff; text-decoration:none;
-    font-weight:600; font-size:15px;
-    padding:13px 26px; border-radius:10px;
-    transition:transform .15s ease, background .15s ease;
+  .store-note{
+    display:inline-block; margin:0;
+    font-weight:600; font-size:15px; color:var(--ink);
+    padding:12px 24px; border:1.5px dashed var(--ink-soft); border-radius:10px;
   }
-  .cta:hover{ background:var(--blue-deep); transform:translateY(-1px); }
-  .cta:focus-visible{ outline:2px solid var(--blue); outline-offset:3px; }
-  .cta::after{ content:"→"; }
 
   /* ---------- callouts ---------- */
   main{ max-width:640px; margin:0 auto; padding:64px 24px 40px; }
-  .section-label{
-    font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:.12em;
-    text-transform:uppercase; color:var(--ink-soft); margin:0 0 24px;
-    display:flex; align-items:center; gap:10px;
-  }
-  .section-label::after{ content:""; flex:1; height:1px; background:var(--line); }
+  .support h2{ font-family:'Space Grotesk',sans-serif; font-size:22px; margin:0 0 16px; }
 
   .callout{
-    display:grid; grid-template-columns:40px 1fr; gap:18px;
     padding:20px 0; border-top:1px solid var(--line);
   }
   .callout:last-child{ border-bottom:1px solid var(--line); }
-  .callout-mark{
-    font-family:'JetBrains Mono',monospace; font-weight:500; font-size:15px;
-    color:var(--blue); width:30px; height:30px; border:1.5px solid var(--blue);
-    border-radius:50%; display:flex; align-items:center; justify-content:center;
-    flex-shrink:0;
-  }
   .callout h3{ font-family:'Space Grotesk',sans-serif; font-size:17px; margin:2px 0 6px; }
   .callout p{ margin:0; color:var(--ink-soft); font-size:14.5px; }
 
@@ -138,7 +127,8 @@
   footer a:hover{ color:var(--blue); }
 
   @media (max-width:480px){
-    .hero{ padding:56px 20px 44px; }
+    .hero{ padding:64px 20px 44px; }
+    .back{ left:20px; }
     main{ padding:48px 20px 32px; }
   }
 
@@ -175,6 +165,7 @@
 </div>
 
 <div class="hero">
+  <a class="back" href="../../">&larr; jucofuco</a>
   <div class="hero-inner">
     <p class="eyebrow">iOS · ARKit</p>
     <h1>Walk to measure.</h1>
@@ -191,47 +182,33 @@
       </svg>
     </div>
 
-    <a class="cta" href="#support">Coming soon to the App Store</a>
+    <p class="store-note">Coming to the App Store for iPhone</p>
   </div>
 </div>
 
 <main>
-  <p class="section-label">what it does</p>
-
   <div class="callout">
-    <div class="callout-mark">A</div>
-    <div>
-      <h3>Touch-point precision</h3>
-      <p>Put the phone at the point instead of guessing where a screen tap landed.</p>
-    </div>
+    <h3>Touch-point precision</h3>
+    <p>Put the phone at the point instead of guessing where a screen tap landed.</p>
   </div>
 
   <div class="callout">
-    <div class="callout-mark">B</div>
-    <div>
-      <h3>Walk any route</h3>
-      <p>Cable runs, pipe paths, fences, room perimeters — get the true path length, the straight-line distance, and the vertical change.</p>
-    </div>
+    <h3>Walk any route</h3>
+    <p>Cable runs, pipe paths, fences, room perimeters — get the true path length, the straight-line distance, and the vertical change.</p>
   </div>
 
   <div class="callout">
-    <div class="callout-mark">C</div>
-    <div>
-      <h3>PDF plan reports</h3>
-      <p>A top-down plan view with measurement tables, ready to send to a client.</p>
-    </div>
+    <h3>PDF plan reports</h3>
+    <p>A top-down plan view with measurement tables, ready to send to a client.</p>
   </div>
 
   <div class="callout">
-    <div class="callout-mark">D</div>
-    <div>
-      <h3>Heights without a ladder</h3>
-      <p>Ceilings, walls, and stairwells — the floor is detected automatically.</p>
-    </div>
+    <h3>Heights without a ladder</h3>
+    <p>Ceilings, walls, and stairwells — the floor is detected automatically.</p>
   </div>
 
   <div class="support" id="support">
-    <p class="section-label">support</p>
+    <h2>Support</h2>
     <div class="support-box">
       <p>Questions, problems, or feature requests: <a href="mailto:jucofuco1@gmail.com">jucofuco1@gmail.com</a> — I read everything.</p>
     </div>
@@ -239,7 +216,7 @@
 </main>
 
 <footer>
-  <span>WalkTape</span>
+  <span>WalkTape <span class="footer-by">by <a href="https://jucofuco.github.io" target="_blank" rel="noopener">jucofuco</a></span></span>
   <span><a href="privacy.html">Privacy Policy</a> · <a href="terms.html">Terms of Use</a></span>
 </footer>
 
